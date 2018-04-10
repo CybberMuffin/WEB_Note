@@ -1,0 +1,29 @@
+
+body
+{
+    background-color: darkcyan;
+}
+.app{
+    border: solid black 2px;
+    position: absolute;
+    width: 75%;
+    height: 500px;
+    left: 25%;
+    top: 100px;
+}
+.photos {
+    border: solid red 1px;
+    position: relative;
+    width: 60%;
+    height: 500px;
+    transform: translate(-17%, 0);
+    font-size: 12px;
+    left: 0;
+    top: 0;
+}
+.b-f{
+    position: relative;
+    top: -40%;
+}
+
+
