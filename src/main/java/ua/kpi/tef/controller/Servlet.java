@@ -1,26 +1,69 @@
 package ua.kpi.tef.controller;
 
-import ua.kpi.tef.controller.workPhoto.DisplayImage;
+import ua.kpi.tef.controller.command.Back;
+import ua.kpi.tef.controller.command.Command;
+import ua.kpi.tef.controller.command.DisplayImage;
+import ua.kpi.tef.model.Photos;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+@WebServlet("/servlet")
 public class Servlet extends HttpServlet{
     private Map<String, Command> commands = new HashMap<>();
+    private DisplayImage display = new DisplayImage();
+    private Photos photos = new Photos();
+
+    public Servlet() throws IOException {
+    }
 
     public void init(){
-        commands.put("logout", new LogOut());
-        commands.put("exception" , new Exception());
+        try {
+            commands.put("display", new DisplayImage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        commands.put("back", new Back());
     }
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //response.getWriter().print("Hello from servlet");
-        DisplayImage.uplode(request, response);
+       launch(request, response);
+        //processRequest(request, response);
     }
 
-    public void ProcessRequest(){
+    public void launch(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("image/jpeg");
+        request.setAttribute("photos", photos);
+        request.getRequestDispatcher("success.jsp").forward(request, response);
+    }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+        //processRequest(request, response);
+    }
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String path = request.getRequestURI();
+        System.out.println(path);
+        path = path.replaceAll(".*/app/" , "");
+        System.out.println(path);
+        Command command = commands.getOrDefault(path , (req, res)->"/index.jsp)");
+        String page = command.execute(request, response);
+        if(page.contains("redirect")){
+            response.sendRedirect(page.replace("redirect:", "/"));
+        }else {
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 
 }

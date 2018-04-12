@@ -4,7 +4,6 @@ body
     background-color: darkcyan;
 }
 .app{
-    border: solid black 2px;
     position: absolute;
     width: 75%;
     height: 500px;
@@ -18,7 +17,7 @@ body
     height: 500px;
     transform: translate(-17%, 0);
     font-size: 12px;
-    left: 0;
+    left: 100px;
     top: 0;
 }
 .b-f{
