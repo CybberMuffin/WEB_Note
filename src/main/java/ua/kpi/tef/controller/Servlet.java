@@ -17,6 +17,7 @@ public class Servlet extends HttpServlet{
     private Map<String, Command> commands = new HashMap<>();
     private DisplayImage display = new DisplayImage();
     private Photos photos = new Photos();
+    private DisplayImage image = new DisplayImage();
 
     public Servlet() throws IOException {
     }
@@ -35,12 +36,13 @@ public class Servlet extends HttpServlet{
         //response.getWriter().print("Hello from servlet");
        launch(request, response);
         //processRequest(request, response);
+
     }
 
     public void launch(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("image/jpeg");
-        request.setAttribute("photos", photos);
+        request.setAttribute("image", image);
         request.getRequestDispatcher("success.jsp").forward(request, response);
     }
 
@@ -57,7 +59,7 @@ public class Servlet extends HttpServlet{
         System.out.println(path);
         path = path.replaceAll(".*/app/" , "");
         System.out.println(path);
-        Command command = commands.getOrDefault(path , (req, res)->"/index.jsp)");
+        Command command = commands.getOrDefault(path , (req, res)->"/success.jsp)");
         String page = command.execute(request, response);
         if(page.contains("redirect")){
             response.sendRedirect(page.replace("redirect:", "/"));
@@ -65,7 +67,6 @@ public class Servlet extends HttpServlet{
             request.getRequestDispatcher(page).forward(request, response);
         }
     }
-
 }
 /*
 public class Servlet extends HttpServlet {

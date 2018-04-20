@@ -15,32 +15,32 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class Photos{
-    private Map<String, BufferedImage> photosLayout = new HashMap();
+    private Map<String, String> photosLayout = new HashMap();
     private List<String> imagesByName;
     private List<BufferedImage> images;
 
     public Photos() throws IOException {
-        photosLayout.put("Photo", ImageIO.read(new File("C:/Flash/p.jpg")));
+        photosLayout.put("Photka", "photo.jpg");
+        photosLayout.put("Mutki", "photo.jpg");
+/*        photosLayout.put("Photo", ImageIO.read(new File("C:/Flash/p.jpg")));
         photosLayout.put("Igor", ImageIO.read(new File("C:/Flash/p.jpg")));
         photosLayout.put("Petya", ImageIO.read(new File("C:/Flash/p.jpg")));
         photosLayout.put("Vasya", ImageIO.read(new File("C:/Flash/p.jpg")));
-        photosLayout.put("Some image", ImageIO.read(new File("C:/Flash/p.jpg")));
+        photosLayout.put("Some image", ImageIO.read(new File("C:/Flash/p.jpg")));*/
 
         imagesByName = new ArrayList(photosLayout.keySet());
         images = new ArrayList(photosLayout.values());
         //TODO put photos into the Map
     }
 
-    public Entry<String, BufferedImage> getFirstEntry() {
+    public Entry<String, String> getFirstEntry() {
         if (photosLayout.entrySet().iterator().hasNext())
-            return (Entry<String, BufferedImage>) photosLayout.entrySet().iterator().next();
+            return (Entry<String, String>) photosLayout.entrySet().iterator().next();
         else
-            return (Entry<String, BufferedImage>) photosLayout.entrySet().iterator();
+            return (Entry<String, String>) photosLayout.entrySet().iterator();
     }
 
-
-
-    public  Map<String, BufferedImage> getPhotosLayout() {
+    public  Map<String, String> getPhotosLayout() {
         return photosLayout;
     }
 
@@ -52,9 +52,6 @@ public class Photos{
     public List<BufferedImage> getImages() {
         return images;
     }
-
-
-
 
     public void sortImages(){
         Collections.sort(imagesByName);
